@@ -109,7 +109,7 @@ angular.module('samWebApp').run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('views/about.html',
-    "<p>This is the about view, what up</p>"
+    "<p>This is the about view, that I'm gonna change, what up</p>"
   );
 
 
