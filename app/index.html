@@ -1,21 +1,12 @@
 <!doctype html>
 <html>
   <head>
+      <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+      <script src="https://use.fontawesome.com/b766556d89.js"></script>
     <meta charset="utf-8">
-    <title></title>
+    <title>Samweb Tarly</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <style>
-      #plane{
-        position:relative;
-        top:0px;
-        background-image: url(http://www.your-new-site.com/img/plane.png);
-        background-repeat: no-repeat;
-        display:block;
-        height:100px;
-        width:135px;
-      }
-    </style>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
@@ -31,46 +22,54 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- Add your site or application content here -->
-    <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
 
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+    <div id="holder">
 
-            <a class="navbar-brand" href="#/">Sam Magdaleno</a>
-          </div>
+        <!-- Add your site or application content here -->
+        <div class="header">
+            <div class="navbar navbar-default" role="navigation"style=" background-color: white;">
+                <div class="container" style="margin-right: 10%;">
+                    <div class="navbar-header">
 
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
 
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="/#!/about">About</a></li>
-              <li><a ng-href="/#!/assignments">Assignments</a></li>
-            </ul>
-          </div>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="js-navbar-collapse">
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#/">Inicio</a></li>
+                            <li><a ng-href="/#!/about">Acerca de Mi</a></li>
+                            <li><a ng-href="/#!/assignments">Tareas</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <div id="plane" style="position:absolute; top:50px"><b>Sam dice: </b>Cool Beans!</div>
+
+
+
+        <div class="mainview" ng-view=""></div>
+
+
+
     </div>
 
-    <div id="b" style="position:absolute; top:50px"><b>Sam dice: </b>Beeeeeeeeeeeeeeeeeeeees!</div>
-    <span id="plane"></span>
-
-    <div class="container">
-      <div ng-view=""></div>
+    <div id="footer" style="margin-left: 75%;">
+        <h2 id="footerText"><b>Sam Magdaleno</b></h2>
+        <a href="https://github.com/samagdaleno/samweb/" target="_blank" class="icon"><i id="githubIcon" class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+        <a href="https://www.facebook.com/sam.magdaleno" target="_blank" class="icon"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
+        <a href="https://twitter.com/SamMagdaeno" target="_blank" class="icon"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a>
     </div>
 
-    <div class="footer">
-      <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span> from Sam, with love</p>
-      </div>
-    </div>
+
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
