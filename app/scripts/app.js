@@ -34,6 +34,11 @@ angular
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
+        .when('/chart', {
+            templateUrl: 'views/chart.html',
+            controller: 'AboutCtrl',
+            controllerAs: 'about'
+        })
       .otherwise({
         redirectTo: '/'
       });

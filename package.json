@@ -34,5 +34,8 @@
   },
   "scripts": {
     "test": "karma start test/karma.conf.js"
+  },
+  "dependencies": {
+    "plotly": "^1.0.6"
   }
 }

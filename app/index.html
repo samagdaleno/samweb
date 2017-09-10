@@ -3,6 +3,8 @@
   <head>
       <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
       <script src="https://use.fontawesome.com/b766556d89.js"></script>
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
     <meta charset="utf-8">
     <title>Samweb Tarly</title>
     <meta name="description" content="">
@@ -15,7 +17,18 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
+      <script src="../bower_components/plotlyjs/plotly.js"></script>
+      <!-- endbuild -->
+      <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-106194711-1', 'auto');
+          ga('send', 'pageview');
+
+      </script>
   </head>
   <body ng-app="samWebApp">
     <!--[if lte IE 8]>
@@ -46,13 +59,14 @@
                             <li><a href="#/">Inicio</a></li>
                             <li><a ng-href="/#!/about">Acerca de Mi</a></li>
                             <li><a ng-href="/#!/assignments">Tareas</a></li>
+                            <li><a ng-href="/#!/chart">Gráfica</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
+            <marquee behavior="scroll" direction="left" scrollamount="18"><b>Sam dice: </b><i>Nolite te Bastardes Carborundorum.</i></marquee>
         </div>
 
-        <div id="plane" style="position:absolute; top:50px"><b>Sam dice: </b>Cool Beans!</div>
 
 
 
@@ -94,6 +108,7 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/plotlyjs/plotly.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

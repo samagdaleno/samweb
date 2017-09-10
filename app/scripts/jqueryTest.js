@@ -25,5 +25,4 @@ $(document).ready(function() {
     flyPlane();
   }, 9000);
 
-
 });
