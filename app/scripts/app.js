@@ -34,11 +34,16 @@ angular
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
-        .when('/chart', {
+      .when('/chart', {
             templateUrl: 'views/chart.html',
-            controller: 'AboutCtrl',
-            controllerAs: 'about'
+            controller: 'ChartCtrl',
+            controllerAs: 'chart'
         })
+      .when('/marvel', {
+        templateUrl: 'views/marvel.html',
+        controller: 'MarvelCtrl',
+        controllerAs: 'marvel'
+       })
       .otherwise({
         redirectTo: '/'
       });
