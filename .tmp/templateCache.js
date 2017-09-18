@@ -25,7 +25,7 @@ angular.module('samWebApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/marvel.html',
-    "<h5>Working on it!</h5>"
+    "<h5>Marvel Character Info</h5> <div id=\"dropdown\"> <select class=\"selector\" id=\"super1\"> </select> <select class=\"selector\" id=\"super2\"> </select> </div> <div><button type=\"button\" class=\"btn btn-default\" id=\"marvelBtn\">Dime!</button></div>"
   );
 
 }]);

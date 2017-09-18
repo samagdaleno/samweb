@@ -111,6 +111,8 @@ a:hover {
 
 .icon{display:inline-block; margin-right:8px;}
 
+.selector{display:inline-block; margin-right:20px;}
+
 /* Supporting marketing content */
 .marketing {
   margin: 40px 0;
