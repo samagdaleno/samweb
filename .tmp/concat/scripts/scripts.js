@@ -144,120 +144,141 @@ angular.module('samWebApp')
             'Karma'
         ];
 
-        var limit = 100;
-        var offset = 0;
-        var characterNames = [];
-        var characterComics = new Map();
-        var characterSeries = new Map();
+        var publickey = "ce5a7162468682fcc8b0cb88d351a8bf";
         var timeStamp = new Date();
         var privateKey = '8e0e98d392a4ffa7ffe8e2383d2add69825b9add';
-        var publicKey = 'ce5a7162468682fcc8b0cb88d351a8bf';
-        var hash = md5.createHash(timeStamp + privateKey + publicKey);
-        var exit = false;
-        while (offset <= limit * 14) {
-            var url = "https://gateway.marvel.com:443/v1/public/characters?ts=" + timeStamp + "&apikey=" + publicKey + "&hash=" + hash + "&limit=" + limit + "&offset=" + offset;
-            $http.get(url)
-                .then(function (response) {
-                    var info = response.data;
-                    var results = info.data.results;
-                    for (var i = 0; i < results.length; i++) {
-                        var character = {
-                            name: results[i].name,
-                            comics: results[i].comics,
-                            series: results[i].series
-                        };
-                        characterNames.push(character.name);
-                        characterComics.set(character.name, character.comics);
-                        characterSeries.set(character.name, character.series);
-                    }
-                })
-                .catch(function (data) {
-                    console.log('An error has occurred. ' + data);
-                    exit = true
-                });
-            if (exit) { break; }
-            offset += 100;
-        }
+        var hash = md5.createHash(timeStamp + privateKey + publickey);
+        var characters = {};
 
-
-        var url = 'https://svxkxr0g6b.execute-api.us-east-1.amazonaws.com/prod/samservice-dev-marvelcharacters';
-        var superList;
-
-        fetch(url, {
+        for (index = 0; index < 15; index++) {
+            offset = (index * 100);
+            var marvelUrl1 = "https://gateway.marvel.com:443/v1/public/characters?ts="+ timeStamp +"&apikey=" + publickey + "&hash=" + hash + "&limit=100&offset=" + offset;
+            fetch(marvelUrl1, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
                 },
-            }
-        ).then(function(response) {
-            if (response.ok) {
-                response.json().then(function (json){
-                    for(var i = 0; i < json.length; i++) {
-                        var obj = json[i];
+            }).then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (defs) {
+                        var info = defs.data.results;
+                        Object.keys(info).forEach(function eachKey(key) {
+                            var name = info[key].name,
+                                id = info[key].id;
+                            characters[name] = id;
+                            $("#super1").append("<option value='" + id + "'>" + name + "</option>");
+                            $("#super2").append("<option value='" + id + "'>" + name + "</option>");
+                        });
+                    });
+                }
+            });
+        };
 
-                        $("#super1").append("<option value='"+ obj +"'>"+ obj + "</option>");
-                        $("#super2").append("<option value='"+ obj +"'>"+ obj + "</option>");
 
-                        console.log(obj);
-                    }
-                });
-            }
-        });
+
+
 
 
         $("#marvelBtn").click(function() {
+            $( "#list1" ).remove();
+            $( "#list2" ).remove();
 
+            var select1 =  $('#super1').find(":selected").val();
+            var select2 =  $('#super2').find(":selected").val();
 
-            var selected1 = $('#super1').find(":selected").text();
-            var selected2 = $('#super2').find(":selected").text();
-            if(selected2 != selected1){
-                $( "#list1" ).remove();
-                $( "#list2" ).remove();
-
+            if(select1 == select2)
+                alert("No puedes escoger el mismo: " + select1 + ", " + select2);
+            else{
                 $("#listas").append("<ul id='list1' class='selector'><p><b>Series juntos</b></p></ul>");
                 $("#listas").append("<ul id='list2' class='selector'><p><b>Comics juntos</b></p></ul>");
 
-                alert( "Has seleccionado " + selected1 + " y " + selected2);
-                var comics1 = characterComics.get(selected1);
-                var comics2 = characterComics.get(selected2);
-                var series1 = characterSeries.get(selected1);
-                var series2 = characterSeries.get(selected2);
-                var comicNames = [];
-                var seriesNames = [];
-                for (var i = 0; i < comics1.items.length; i++) {
-                    comicNames.push(comics1.items[i].name);
-                }
-                for (var i = 0; i < series1.items.length; i++) {
-                    seriesNames.push(series1.items[i].name);
-                }
-                for (var i = 0; i < comics2.items.length; i++) {
-                    if (comicNames.includes(comics2.items[i].name)) {
-                        !$scope.comics.push(comics2.items[i].name);
-                    }
-                }
-                for (var i = 0; i < series2.items.length; i++) {
-                    if (seriesNames.includes(series2.items[i].name)) {
-                        !$scope.series.push(series2.items[i].name);
-                    }
-                }
-                console.log(seriesNames);
-                console.log(comicNames);
 
-                for(var i = 0; i < seriesNames.length; i++) {
-                    var obj = seriesNames[i];
-                    $("#list1").append("<li>"+ obj +"</li>");
-                }
 
-                for(var i = 0; i < comicNames.length; i++) {
-                    var obj = comicNames[i];
-                    $("#list2").append("<li>"+ obj +"</li>");
-                }
+                var seriesUrl = 'https://axqz4qv9k1.execute-api.us-east-1.amazonaws.com/dev/series/',
+                    commonSeries,
+                    id1 = select1,
+                    id2 = select2;
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: seriesUrl,
+                    data: JSON.stringify({
+                        "firstCharacterId": id1,
+                        "secondCharacterId": id2
+                    }),
+                    headers: {"X-API-KEY" : "9kypYHDWCs8EbplN6hzBG9GMR0wgIWVV6LTcG2ohX"},
+                    success: function(response){
+                        console.log("SI FUNCIONÓ!");
+                        console.log(response);
+                        commonSeries = response;
+                        var seriesA = commonSeries[0].series0;
+                        var seriesB = commonSeries[1].series0;
+
+                        var seriesJuntos = seriesA.filter(function(val) {
+                            return seriesB.indexOf(val) != -1;
+                        });
+
+                        console.log("Series juntos: " + seriesJuntos);
+
+                        if(seriesJuntos == '')
+                            $("#list1").append("<li> No hay series juntos :( </li>");
+
+                        for(var i = 0; i < seriesJuntos.length; i++) {
+                            var obj = seriesJuntos[i];
+
+                            $("#list1").append("<li>"+ obj +"</li>");
+
+                            console.log(obj);
+                        }
+                        console.log("SI FUNCIONÓ!");
+                    }
+                });
+
+
+                var comicsUrl = 'https://axqz4qv9k1.execute-api.us-east-1.amazonaws.com/dev/comics/',
+                    commonComics;
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: comicsUrl,
+                    data: JSON.stringify({
+                        "firstCharacterId": id1,
+                        "secondCharacterId": id2
+                    }),
+                    headers: {"X-API-KEY" : "9kypYHDWCs8EbplN6hzBG9GMR0wgIWVV6LTcG2ohX"},
+                    success: function(response){
+                        console.log("MADE OF METAL!");
+                        console.log(response);
+                        commonComics = response;
+                        var comicsA = commonComics[0].comics0;
+                        var comicsB = commonComics[1].comics0;
+
+                        var comicsJuntos = comicsA.filter(function(val) {
+                            return comicsB.indexOf(val) != -1;
+                        });
+
+                        console.log("Series juntos: " + comicsJuntos);
+
+                        if(comicsJuntos == '')
+                            $("#list2").append("<li> No hay comics juntos :( </li>");
+
+                        for(var i = 0; i < comicsJuntos.length; i++) {
+                            var obj = comicsJuntos[i];
+
+                            $("#list2").append("<li>"+ obj +"</li>");
+
+                            console.log(obj);
+                        }
+                        console.log("TORNADO OF SOULS!");
+                    }
+                });
             }
 
-            else{
-                alert("¡No puedes seccionar al mismo!");
-            }
         });
+
+
 
     }]);
 
@@ -288,7 +309,7 @@ angular.module('samWebApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('views/marvel.html',
-    "<h5>Marvel Character Info</h5> <div id=\"dropdown\"> <select class=\"selector\" id=\"super1\"> </select> <select class=\"selector\" id=\"super2\"> </select> </div> <div><button type=\"button\" class=\"btn btn-default\" id=\"marvelBtn\">Dime!</button></div> <div id=\"listas\"> <ul id=\"list1\" class=\"selector\"></ul> <ul id=\"list2\" class=\"selector\"> </ul> </div>"
+    "<h5>Marvel Character Info</h5> <div id=\"dropdown\"> <select class=\"selector\" id=\"super1\"> </select> <select class=\"selector\" id=\"super2\"> </select> </div> <br> <div><button type=\"button\" class=\"btn btn-default\" id=\"marvelBtn\">Dime!</button></div> <br> <div id=\"listas\"> <ul id=\"list1\" class=\"selector\"></ul> <ul id=\"list2\" class=\"selector\"> </ul> </div>"
   );
 
 }]);
