@@ -68,16 +68,16 @@ angular.module('samWebApp')
                     type: 'POST',
                     url: seriesUrl,
                     data: JSON.stringify({
-                        "firstCharacterId": id1,
-                        "secondCharacterId": id2
+                        "id1": id1,
+                        "id2": id2
                     }),
                     headers: {"X-API-KEY" : "9kypYHDWCs8EbplN6hzBG9GMR0wgIWVV6LTcG2ohX"},
                     success: function(response){
                         console.log("SI FUNCIONÓ!");
-                        console.log(response);
+                        console.log("SAAAAAM Comics:" + response);
                         commonSeries = response;
-                        var seriesA = commonSeries[0].series0;
-                        var seriesB = commonSeries[1].series0;
+                        var seriesA = commonSeries[0];
+                        var seriesB = commonSeries[1];
 
                         var seriesJuntos = seriesA.filter(function(val) {
                             return seriesB.indexOf(val) != -1;
@@ -92,8 +92,6 @@ angular.module('samWebApp')
                             var obj = seriesJuntos[i];
 
                             $("#list1").append("<li>"+ obj +"</li>");
-
-                            console.log(obj);
                         }
                         console.log("SI FUNCIONÓ!");
                     }
@@ -108,16 +106,16 @@ angular.module('samWebApp')
                     type: 'POST',
                     url: comicsUrl,
                     data: JSON.stringify({
-                        "firstCharacterId": id1,
-                        "secondCharacterId": id2
+                        "id1": id1,
+                        "id2": id2
                     }),
                     headers: {"X-API-KEY" : "9kypYHDWCs8EbplN6hzBG9GMR0wgIWVV6LTcG2ohX"},
                     success: function(response){
                         console.log("MADE OF METAL!");
-                        console.log(response);
+                        console.log("SAAAAAM Comics:" + response);
                         commonComics = response;
-                        var comicsA = commonComics[0].comics0;
-                        var comicsB = commonComics[1].comics0;
+                        var comicsA = commonComics[0];
+                        var comicsB = commonComics[1];
 
                         var comicsJuntos = comicsA.filter(function(val) {
                             return comicsB.indexOf(val) != -1;
@@ -132,8 +130,6 @@ angular.module('samWebApp')
                             var obj = comicsJuntos[i];
 
                             $("#list2").append("<li>"+ obj +"</li>");
-
-                            console.log(obj);
                         }
                         console.log("TORNADO OF SOULS!");
                     }
